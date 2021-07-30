@@ -1,3 +1,3 @@
-import chessboard from './chessboard'
+import run from './sun'
 
-chessboard()
+run()
