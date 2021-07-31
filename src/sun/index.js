@@ -76,6 +76,7 @@ const init = () => {
       uResolution: { value: new THREE.Vector2(0.0, 0.0) },
     },
   })
+
   const cubeSun = new THREE.SphereBufferGeometry(1, 30, 30)
   const cubeTextureMesh = new THREE.Mesh(cubeSun, cubeMaterialSun)
   perlinScene.add(cubeTextureMesh)

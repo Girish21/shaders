@@ -149,7 +149,7 @@ float fbm(in vec4 position) {
 void main() {
   vec2 uv = (gl_FragCoord.xy - uResolution) / uResolution.yy;
 
-  float noisy = fbm(vec4(vPosition * 3., uTime * 0.05));
+  float noisy = fbm(vec4(vPosition * 4., uTime * 0.05));
   float spots = max(snoise(vec4(vPosition * 2., uTime * 0.05)), 0.);
 
   gl_FragColor = vec4(noisy);
