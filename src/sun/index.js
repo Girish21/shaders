@@ -8,6 +8,9 @@ import PerlinFragmentShader from '../../shader/sun/baseTexture/fragment.frag'
 import BaseVertexShader from '../../shader/sun/cubeTexture/vertex.vert'
 import BaseFragmentShader from '../../shader/sun/cubeTexture/fragment.frag'
 
+import AroundVertexShader from '../../shader/sun/aroundTexture/vertex.vert'
+import AroundFragmentShader from '../../shader/sun/aroundTexture/fragment.frag'
+
 const canvas = document.querySelector('canvas#webGL')
 
 const init = () => {
@@ -33,6 +36,22 @@ const init = () => {
   const mesh = new THREE.Mesh(geometry, materialSun)
   scene.add(mesh)
 
+  // sun around texture
+  const aroundMaterialSun = new THREE.ShaderMaterial({
+    vertexShader: AroundVertexShader,
+    fragmentShader: AroundFragmentShader,
+    side: THREE.BackSide,
+    uniforms: {
+      uTime: { value: 0 },
+      uResolution: { value: new THREE.Vector2(0.0, 0.0) },
+      uPerlin: { value: null },
+    },
+    transparent: true,
+  })
+  const aroundSunGeometry = new THREE.SphereBufferGeometry(1.2, 30, 30)
+  const aroundSunMesh = new THREE.Mesh(aroundSunGeometry, aroundMaterialSun)
+  scene.add(aroundSunMesh)
+
   // canvas size
   const size = {
     width: window.innerWidth,
@@ -52,7 +71,7 @@ const init = () => {
     0.1,
     100
   )
-  camera.position.set(1, 1, 1)
+  camera.position.set(0, 0, 2)
   scene.add(camera)
 
   // Cube renderer
