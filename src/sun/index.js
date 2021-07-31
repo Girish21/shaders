@@ -2,8 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import * as dat from 'dat.gui'
 
-import CubeVertexShader from '../../shader/sun/baseTexture/vertex.vert'
-import CubeFragmentShader from '../../shader/sun/baseTexture/fragment.frag'
+import PerlinVertexShader from '../../shader/sun/baseTexture/vertex.vert'
+import PerlinFragmentShader from '../../shader/sun/baseTexture/fragment.frag'
 
 import BaseVertexShader from '../../shader/sun/cubeTexture/vertex.vert'
 import BaseFragmentShader from '../../shader/sun/cubeTexture/fragment.frag'
@@ -67,9 +67,9 @@ const init = () => {
   const cubeCamera = new THREE.CubeCamera(0.1, 10, cubeRenderTarget)
 
   // cube material
-  const cubeMaterialSun = new THREE.ShaderMaterial({
-    vertexShader: CubeVertexShader,
-    fragmentShader: CubeFragmentShader,
+  const perlinMaterialSun = new THREE.ShaderMaterial({
+    vertexShader: PerlinVertexShader,
+    fragmentShader: PerlinFragmentShader,
     side: THREE.DoubleSide,
     uniforms: {
       uTime: { value: 0 },
@@ -77,9 +77,8 @@ const init = () => {
     },
   })
 
-  const cubeSun = new THREE.SphereBufferGeometry(1, 30, 30)
-  const cubeTextureMesh = new THREE.Mesh(cubeSun, cubeMaterialSun)
-  perlinScene.add(cubeTextureMesh)
+  const perlinMesh = new THREE.Mesh(geometry, perlinMaterialSun)
+  perlinScene.add(perlinMesh)
 
   const controls = new OrbitControls(camera, canvas)
   controls.enableDamping = true
@@ -111,7 +110,7 @@ const init = () => {
     const elapsedTime = clock.getElapsedTime()
 
     materialSun.uniforms.uTime.value = elapsedTime
-    cubeMaterialSun.uniforms.uTime.value = elapsedTime
+    perlinMaterialSun.uniforms.uTime.value = elapsedTime
 
     cubeCamera.update(renderer, perlinScene)
     materialSun.uniforms.uPerlin.value = cubeRenderTarget.texture
